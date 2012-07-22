@@ -1,0 +1,17 @@
+\chapter{Cassandra}
+
+Apache Cassandra is an open source distributed database management system. It is an Apache Software Foundation top-level project designed to handle very large amounts of data spread out across many commodity servers while providing a highly available service with no single point of failure. It is a NoSQL solution that was initially developed by Facebook and powered their Inbox Search feature until late 2010. Jeff Hammerbacher, who led the Facebook Data team at the time, has described Cassandra as a BigTable data model running on an Amazon Dynamo-like infrastructure.
+
+Cassandra provides a structured key-value store with tunable consistency. Keys map to multiple values, which are grouped into column families. The column families are fixed when a Cassandra database is created, but columns can be added to a family at any time. Furthermore, columns are added only to specified keys, so different keys can have different numbers of columns in any given family.
+
+The values from a column family for each key are stored together. This makes Cassandra a hybrid data management system between a column-oriented DBMS and a row-oriented store. Additional features include: using the BigTable way of modeling, eventual consistency, and the Gossip protocol, a master-master way of serving read and write requests inspired by Amazon's Dynamo.
+
+\section{Short specification}
+
+\begin{itemize}
+  \item \textbf{Written in:} Java
+  \item \textbf{Main point:} Best of BigTable and Dynamo
+  \item \textbf{License:} Apache License 2
+  \item \textbf{Protocol:} Custom, binary (Thrift)
+  \item \textbf{Web site:} \href{http://cassandra.apache.org/}{cassandra.apache.org}
+\end{itemize}
