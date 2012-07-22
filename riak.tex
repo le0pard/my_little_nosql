@@ -1,1 +1,14 @@
 \chapter{Riak}
+
+Riak is a NoSQL database implementing the principles from Amazon's Dynamo paper.
+Riak has a pluggable backend for its core shard-partitioned storage, with the default storage backend being Bitcask as of the 0.12 release. Riak also has built-in MapReduce with native support for both JavaScript (using the SpiderMonkey runtime) and Erlang, while supporting a variety of additional language drivers such as Python, Java, PHP and Ruby.
+
+\section{Short specification}
+
+\begin{itemize}
+  \item \textbf{Written in:} Erlang \& C, some Javascript
+  \item \textbf{Main point:} Fault tolerance
+  \item \textbf{License:} Apache License 2.0
+  \item \textbf{Protocol:} HTTP/REST or custom binary
+  \item \textbf{Web site:} \href{http://wiki.basho.com/}{wiki.basho.com}
+\end{itemize}
