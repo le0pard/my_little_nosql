@@ -1,0 +1,13 @@
+*.aux
+*.backup
+*.log
+*.idx
+*.out
+*.snm
+*.sty~
+*.tex~
+*.toc
+my_little_nosql.pdf
+.DS_Store
+my_little_nosql.synctex.gz
+latex/*
