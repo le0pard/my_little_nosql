@@ -27,11 +27,22 @@ MapReduce MapReduce
 
 \section{Strengths}
 
-If you want to design a large-scale ordering system like Amazon, or in any situation where high availability, you should consider Riak. One of Riak's strengths lies in its focus on removing single points of failure in an attempt to support maximum uptime and grow (or shrink) to meet changing demands. If you do not have complex data, Riak keeps things simple but still allows for some pretty sophisticated data diving should you need it. There is currently support for about a dozen languages (which you can find on the Riak website) but is extendable to its core if you like to write in Erlang. And if you require more speed than HTTP can handle, you can also try your hand at communicating via Protobuf, which is a more efficient binary encoding and transport protocol.\cite{seven_databases}
+If you want to design a large-scale ordering system like Amazon, or in any situation where high availability, you should consider Riak. One of Riak's strengths lies in its focus on removing single points of failure in an attempt to support maximum uptime and grow (or shrink) to meet changing demands. If you do not have complex data, Riak keeps things simple but still allows for some pretty sophisticated data diving should you need it.\cite{seven_databases}
 
 \section{Weaknesses}
 
-If you require simple ability to do query, complex data structures, or a rigid schema or if you have no need to scale horizontally with your servers, Riak is probably not your best choice. One of our major gripes about Riak is it still lags in terms of an easy and robust ad hoc querying framework, although it is certainly on the right track. MapReduce provides fantastic and powerful functionality, but we’d like to see more built-in URL-based or other PUT query actions. The addition of indexing was a major step in the right direction and a concept we’d love to see expanded upon. Finally, if you don’t want to write Erlang, you may see a few limitations using JavaScript, such as the unavail- ability of post-commit or slower MapReduce execution. However, the Riak team is working on these relatively minor hiccups.\cite{seven_databases}
+If you require simple ability to do query, complex data structures, or a rigid schema or if you have no need to scale horizontally with your servers, Riak is probably not your best choice. One of our major gripes about Riak is it still lags in terms of an easy and robust ad hoc querying framework, although it is certainly on the right track. MapReduce provides fantastic and powerful functionality, but we’d like to see more built-in URL-based or other PUT query actions. The addition of indexing was a major step in the right direction and a concept we’d love to see expanded upon. Finally, if you don’t want to write Erlang, you may see a few limitations using JavaScript, such as the unavailability of post-commit or slower MapReduce execution.\cite{seven_databases}
 
 \section{Tips}
 
+\section{Use cases}
+
+\begin{itemize}
+  \item Session Storage
+  \item User Data storage
+  \item S3-like services
+  \item Cloud infrastructure
+  \item Scalable, low-latency storage for mobile apps
+  \item Critical Data Storage
+  \item Building Block for custom-built distributed systems
+\end{itemize}
