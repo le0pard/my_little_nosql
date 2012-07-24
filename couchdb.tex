@@ -1,6 +1,6 @@
 \chapter{CouchDB}
 
-Apache CouchDB, commonly referred to as CouchDB, is an open source database that focuses on ease of use and on being <<a database that completely embraces the web>>. It is a NoSQL database that uses JSON to store data, JavaScript as its query language using MapReduce and HTTP for an API. One of its distinguishing features is easy replication.
+Apache CouchDB, commonly referred to as CouchDB, is an open source database that focuses on ease of use and on being <<a database that completely embraces the web>>. It is a NoSQL database that uses JSON to store data, JavaScript as its query language using MapReduce and HTTP for an API.
 
 \section{Short specification}
 
@@ -19,9 +19,33 @@ Apache CouchDB, commonly referred to as CouchDB, is an open source database that
   \includegraphics[width=1\textwidth]{couch_vs_mongo.jpeg}
 \end{figure}
 
-\subsection{MapReduce}
+\subsection{Document Storage}
 
-MapReduce MapReduce
+All documents stores in JSON format, so schema of records is flexible, like in MongoDB.
+
+\subsection{Document Revisions}
+
+All documents have list of revisions (old versions of this document), this can help do rollback of documents.
+
+\subsection{Powerful MapReduce}
+
+Design documents are a special type of CouchDB document that contains application code. Because it runs inside a database, the application API is highly structured.\cite{couchdb_book}
+
+\subsection{REST API}
+
+CouchDB stored all items as a resources, each have unique URI and you can do CRUD (Create, Read, Update, Delete) operations on all resources.
+
+\subsection{CouchApp}
+
+Because of the architecture CouchDB is built on, it is actually possible to build entire web applications that reside inside an CouchDB database. We call these applications CouchApps. CouchApps allow you to create full database-driven applications using nothing but HTML5, CSS and JavaScript. The beauty of these apps is that they allow you to take full advantage of CouchDB's powerful replication features to replicate your CouchApp across CouchDB instances. This allows you to keep your CouchApp on several devices, and synchronize them, with automated incremental replication keeping your data up-to-date on each device. Exists CouchApp, which written on Python\footnote{http://couchapp.org} and written on Node.js\footnote{https://github.com/mikeal/node.couchapp.js}.
+
+\subsection{Distributed Architecture with Replication}
+
+CouchDB was designed with bi-direction replication (or synchronization) and off-line operation in mind. That means multiple replicas can have their own copies of the same data, modify it, and then sync those changes at a later time. The biggest gotcha typically associated with this level of flexibility is conflicts.
+
+\subsection{Eventual Consistency}
+
+CouchDB guarantees eventual consistency to be able to provide both availability and partition tolerance.
 
 \section{Strengths}
 
@@ -90,4 +114,5 @@ Another problem in CouchDB is a geo search, for example, find all objects within
   \item S3-like services
   \item Cloud infrastructure
   \item Scalable, low-latency storage for mobile apps
+  \item Financial applications (where need full history of record changes)
 \end{itemize}
