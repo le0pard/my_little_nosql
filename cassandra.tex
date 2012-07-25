@@ -1,5 +1,12 @@
 \chapter{Cassandra}
 
+\begin{wrapfigure}{r}{0.5\textwidth}
+  \vspace{-42pt}
+  \begin{center}
+    \includegraphics[width=0.48\textwidth]{cassandra.png}
+  \end{center}
+  \vspace{-20pt}
+\end{wrapfigure}
 Apache Cassandra is an open source distributed database management system. It is an Apache Software Foundation top-level project designed to handle very large amounts of data spread out across many commodity servers while providing a highly available service with no single point of failure. It is a NoSQL solution that was initially developed by Facebook and powered their Inbox Search feature until late 2010. Jeff Hammerbacher, who led the Facebook Data team at the time, has described Cassandra as a BigTable data model running on an Amazon Dynamo-like infrastructure.
 
 Cassandra provides a structured key-value store with tunable consistency. Keys map to multiple values, which are grouped into column families. The column families are fixed when a Cassandra database is created, but columns can be added to a family at any time. Furthermore, columns are added only to specified keys, so different keys can have different numbers of columns in any given family.
