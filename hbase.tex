@@ -20,3 +20,35 @@ HBase features compression, in-memory operation, and Bloom filters on a per-colu
   \item \textbf{Protocol:} HTTP/REST (also Thrift)
   \item \textbf{Web site:} \href{http://hbase.apache.org/}{hbase.apache.org}
 \end{itemize}
+
+\section{Main features}
+
+\section{Strengths}
+
+Noteworthy features of HBase include a robust scale-out architecture and built-in versioning and compression capabilities. HBase's built-in versioning capability can be a compelling feature for certain use cases. Keeping the version history of wiki pages is a crucial feature for policing and maintenance, for instance. By choosing HBase, we don’t have to take any special steps to implement page history—we get it for free.
+
+On the performance front, HBase is meant to scale out. If you have huge amounts of data, measured in many gigabytes or terabytes, HBase may be for you. HBase is rack-aware, replicating data within and between datacenter racks so that node failures can be handled gracefully and quickly.
+
+The HBase community is pretty awesome. There's almost always somebody on the IRC channel10 or mailing lists ready to help with questions and get you pointed in the right direction. Although a number of high-profile companies use HBase for their projects, there is no corporate HBase service provider. This means the people of the HBase community do it for the love of the project and the common good.\cite{seven_databases}
+
+\section{Weaknesses}
+
+Although HBase is designed to scale out, it doesn't scale down. The HBase community seems to agree that five nodes is the minimum number you'll want to use. Because it's designed to be big, it can also be harder to administrate. Solving small problems isn't what HBase is about, and nonexpert documentation is tough to come by, which steepens the learning curve.
+
+Additionally, HBase is almost never deployed alone. Rather, it's part of an ecosystem of scale-ready pieces. These include Hadoop (an implementation of Google's MapReduce), the Hadoop distributed file system (HDFS), and Zookeeper (a headless service that aids internode coordination). This ecosystem is both a strength and a weakness; it simultaneously affords a great deal of architectural sturdiness but also encumbers the administrator with the burden of maintaining it.
+
+One noteworthy characteristic of HBase is that it doesn't offer any sorting or indexing capabilities aside from the row keys. Rows are kept in sorted order by their row keys, but no such sorting is done on any other field, such as column names and values. So, if you want to find rows by something other than their key, you need to scan the table or maintain your own index.
+
+Another missing concept is datatypes. All field values in HBase are treated as uninterpreted arrays of bytes. There is no distinction between, say, an integer value, a string, and a date. They're all bytes to HBase, so it's up to your application to interpret the bytes.\cite{seven_databases}
+
+\section{Tips}
+
+\section{Use cases}
+
+\begin{itemize}
+  \item Session Storage
+  \item Cache Storage
+  \item Job Queue
+  \item Real time analysis
+  \item Pub/Sub
+\end{itemize}
