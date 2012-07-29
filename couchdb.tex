@@ -34,9 +34,9 @@ All documents stores in JSON format, so schema of records is flexible, like in M
 
 All documents have list of revisions (old versions of this document), this can help do rollback of documents.
 
-\subsection{Powerful MapReduce}
+\subsection{Map/Reduce Views and Indexes}
 
-Design documents are a special type of CouchDB document that contains application code. Because it runs inside a database, the application API is highly structured.\cite{couchdb_book}
+The data stored is structured using views. In CouchDB, each view is constructed by a JavaScript function that acts as the Map half of a map/reduce operation. The function takes a document and transforms it into a single value which it returns. CouchDB can index views and keep those indexes updated as documents are added, removed, or updated.
 
 \subsection{REST API}
 
@@ -56,8 +56,13 @@ CouchDB guarantees eventual consistency to be able to provide both availability 
 
 \section{Strengths}
 
+CouchDB is a robust and stable member of the NoSQL community. Built on the philosophy that networks are unreliable and hardware failure is imminent, CouchDB offers a heartily decentralized approach to data storage. Small enough to live in your smartphone and big enough to support the enterprise, CouchDB affords a variety of deployment situations.
+
+CouchDB is as much an API as a database. In this chapter, we focused on the canonical Apache CouchDB project, but there are an increasing number of alternative implementations and CouchDB service providers built on hybrid back ends. Because CouchDB is made <<of the Web, for the Web,>> it’s fairly straightforward to layer in web technologies~-- such as load balancers and caching layers~-- and still end up with something that’s true to CouchDB’s APIs.\cite{seven_databases}
 
 \section{Weaknesses}
+
+Of course, CouchDB isn’t for everything. CouchDB's mapreduce-based views, while novel, can't perform all the fancy data slicing you'd expect from a relational database. In fact, you shouldn’t be running ad hoc queries at all in production. Also, CouchDB's replication strategy isn't always the right choice. CouchDB replication is all or nothing, meaning all replicated servers will have the same contents. There is no sharding to distribute content around the datacenter. The principal reason for adding more CouchDB nodes is not to spread the data around so much as to increase throughput for read and write operations.\cite{seven_databases}
 
 \section{Tips}
 
