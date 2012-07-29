@@ -19,3 +19,27 @@ You can run atomic operations on these types, like appending to a string; increm
   \item \textbf{Protocol:} Telnet-like
   \item \textbf{Web site:} \href{http://redis.io}{redis.io}
 \end{itemize}
+
+\section{Main features}
+
+\section{Strengths}
+
+The obvious strength of Redis is speed, like so many key-value stores of its ilk. But more than most key-value stores, Redis provides the ability to store complex values like lists, hashes, and sets, and retrieve them based through operations specific to those datatypes. Beyond even a data structure store, however, Redis's durability options allow you to trade speed for data safety up to a fairly fine point. Built-in master-slave replication is another nice way of ensuring better durability without requiring the slowness of syncing an append-only file to disk on every operation. Additionally, replication is great for very high-read systems.\cite{seven_databases}
+
+\section{Weaknesses}
+
+Redis is fast largely because it resides in memory. Some may consider this cheating, since of course a database that never hits the disk will be fast. A main memory database has an inherent durability problem; namely, if you shut down the database before a snapshot occurs, you can lose data. Even if you set the append-only file to disk sync on every operation, you run a risk with playing back expiry values, since time-based events can never be counted on to replay in exactly the same manner—though in fairness this case is more hypothetical than practical.
+
+Redis also does not support datasets larger than your available RAM (Redis is removing virtual memory support), so its size has a practical limitation. Although there is a Redis Cluster currently in development to grow beyond a single-machine’s RAM requirements, anyone wanting to cluster Redis must currently roll their own with a client that supports it.\cite{seven_databases}
+
+\section{Tips}
+
+\section{Use cases}
+
+\begin{itemize}
+  \item Session Storage
+  \item Cache Storage
+  \item Job Queue
+  \item Real time analysis
+  \item Pub/Sub
+\end{itemize}

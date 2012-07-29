@@ -18,3 +18,28 @@ MongoDB is part of the NoSQL family of database systems. Instead of storing data
   \item \textbf{Protocol:} Custom, binary (BSON), HTTP/REST
   \item \textbf{Web site:} \href{http://www.mongodb.org/}{www.mongodb.org}
 \end{itemize}
+
+\section{Main features}
+
+\section{Strengths}
+
+Mongo's primary strength lies in its ability to handle huge amounts of data (and huge amounts of requests) by replication and horizontal scaling. But it also has an added benefit of a very flexible data model, since you needn’t ever conform to a schema and can simply nest any values you would generally join using SQL in an RDBMS anyway.
+
+Finally, MongoDB was built to be easy to use. You may have noticed the similarity between Mongo commands and SQL database concepts (minus the server-side joins). This is not by accident and is one reason Mongo is gaining so much mind share from former object-relational model (ORM) users. It’s different enough to scratch a lot of developer itches but not so different it becomes a wholly different and scary monster.\cite{seven_databases}
+
+\section{Weaknesses}
+
+How Mongo encourages denormalization of schemas (by not having any) might be a bit too much for some to swallow. Some developers find the cold, hard constraints of a relational database reassuring. It can be dangerous to insert any old value of any type into any collection. A single typo can cause hours of headache if you don’t think to look at field names and collection names as a possible culprit. Mongo’s flexibility is generally not important if your data model is already fairly mature and locked down.
+
+Because Mongo is focused on large datasets, it works best in large clusters, which can require some effort to design and manage. Unlike Riak, where adding new nodes is transparent and relatively painless for operations, setting up a Mongo cluster requires a little more forethought.\cite{seven_databases}
+
+\section{Tips}
+
+\section{Use cases}
+
+\begin{itemize}
+  \item Where need ORDBMS (object-relational database management system), but you don't have clear structure of the tables (you need shema-less)
+  \item Storing Log Data
+  \item Cache Storage
+  \item Analytics
+\end{itemize}
