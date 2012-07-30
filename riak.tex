@@ -30,7 +30,27 @@ Riak has a pluggable backend for its core shard-partitioned storage, with the de
 
 \subsection{MapReduce}
 
-MapReduce MapReduce
+Riak's MapReduce implementation supports both using JavaScript and Erlang to run MapReduce, with JavaScript being more suitable for ad hoc style queries, whereas Erlang code needs to be known to all physical nodes in the cluster before you can use it, but comes with some performance benefits.
+
+\subsection{Links & link walking}
+
+Linking objects is one of the neat additions of Riak over and above Dynamo. You can create logical trees or even graphs of objects. If you fancy object-oriented programming, this can be used as the equivalent of object associations.
+
+Riak's HTTP API offers a simple way to fetch linked objects through an arbitrary number of links. When you request a single object, you attach one or more additional parameters to the URL, specifying the target bucket, the tag and whether you would like the linked object to be included in the response.
+
+\subsection{Search}
+
+Riak Search was heavily inspired by Apache Lucene, which is close enough to being a defacto standard for full-text search. The similarities focus mostly on the interface, though, manifesting themselves in the Solr-like HTTP interface and the Lucene-style query syntax, but Riak Search doesn't support the full Lucene query set yet.
+
+\subsection{Secondary Indexes}
+
+Secondary indexes (or short: 2i) are a very recent addition to Riak. They offer a much simpler way to do reverse lookups on data stored in Riak than Riak Search. Instead of having Riak analyze and tokenize data in documents (JSON, XML, text), 2i relies on the application to provide the indexing data as key-value pairs when storing data. It doesn't do any tokenization either, and doesn't allow things like partial matches like full-text search does, so it's much less computationally expensive.
+
+Computation is instead pushed into the application layer, which basically tags objects stored in Riak with the data it wants to run queries on. Riak 2i can index integers and binary values like strings, and everything is stored in lowercase. So instead of indexing an object you add some metadata to it which Riak can then use to do index lookups. Like Riak Search, 2i only returns keys for you to use. It doesn't do any object lookups, but you can feed the results into MapReduce to do so in the same step.
+
+\subsection{Cluster with Failover}
+
+
 
 \section{Strengths}
 
