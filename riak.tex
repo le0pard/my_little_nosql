@@ -32,7 +32,7 @@ Riak has a pluggable backend for its core shard-partitioned storage, with the de
 
 Riak's MapReduce implementation supports both using JavaScript and Erlang to run MapReduce, with JavaScript being more suitable for ad hoc style queries, whereas Erlang code needs to be known to all physical nodes in the cluster before you can use it, but comes with some performance benefits.
 
-\subsection{Links & link walking}
+\subsection{Links}
 
 Linking objects is one of the neat additions of Riak over and above Dynamo. You can create logical trees or even graphs of objects. If you fancy object-oriented programming, this can be used as the equivalent of object associations.
 
@@ -50,7 +50,11 @@ Computation is instead pushed into the application layer, which basically tags o
 
 \subsection{Cluster with Failover}
 
+Riak's default mode of operation is in a cluster. A Riak cluster is generally run on a set of well-connected physical hosts. Each host in the cluster runs one Riak node. Each Riak node runs a set of virtual nodes, or <<vnodes>>, that are each responsible for storing a separate portion of the key space. Nodes are not clones of each other, nor do they all participate in fulfilling every request. The extent to which data is replicated, and when, and with what merge strategy and failure model, is configurable at runtime.
 
+\subsection{Eventual Consistency}
+
+In a distributed and fault-tolerant environment like Riak, the unexpected is expected. That means that nodes may leave and join the cluster at any time, be it by accident (node failure, network partition, etc.) or on purpose, e.g. by explicitly removing a node from a Riak cluster. Even with one or more nodes down, the cluster is still expected to accept writes and serve reads, and the system is expected to return the same data from all nodes eventually, even the failed ones after they rejoined the cluster.
 
 \section{Strengths}
 
