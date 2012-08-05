@@ -23,6 +23,14 @@ These features are designed to support web application development where the hig
 
 \section{Main features}
 
+\subsection{Memcached compatible}
+
+With memcached inside, Couchbase Server enables applications to read and write data with sub-millisecond latency and sustained high throughput. Efficient memory management delivers predictable latency: an object-level cache prevents thrashing inherent to page-level approaches. Users can allocate cache resources per database depending on application needs, rather than relying on global cache management by the operating system.
+
+\subsection{Zero-downtime maintenance}
+
+Couchbase Server allows you to perform any maintenance tasks on a live cluster. Not only do cluster topology changes like adding or removing servers require no application downtime, but even upgrading software can be done on a running system.
+
 \section{Strengths}
 
 \section{Weaknesses}
@@ -32,9 +40,8 @@ These features are designed to support web application development where the hig
 \section{Use cases}
 
 \begin{itemize}
-  \item CRM, CMS systems
-  \item S3-like services
   \item Cloud infrastructure
   \item Scalable, low-latency storage for mobile apps
-  \item Financial applications (where need full history of record changes)
+  \item Targeting
+  \item Highly-concurrent web apps like online gaming
 \end{itemize}
