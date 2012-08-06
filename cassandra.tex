@@ -22,3 +22,47 @@ The values from a column family for each key are stored together. This makes Cas
   \item \textbf{Protocol:} Custom, binary (Thrift)
   \item \textbf{Web site:} \href{http://cassandra.apache.org/}{cassandra.apache.org}
 \end{itemize}
+
+\section{Main features}
+
+\subsection{Decentralized}
+
+Every node in the cluster has the same role. There is no single point of failure. Data is distributed across the cluster (so each node contains different data), but there is no master as every node can service any request.
+
+\subsection{Supports replication and multi data center replication}
+
+Replication strategies are configurable. Cassandra is designed as a distributed system, for deployment of large numbers of nodes across multiple data centers. Key features of Cassandra’s distributed architecture are specifically tailored for multiple-data center deployment, for redundancy, for failover and disaster recovery.
+
+\subsection{Scalability}
+
+Read and write throughput both increase linearly as new machines are added, with no downtime or interruption to applications.
+
+\subsection{Fault-tolerant}
+
+Data is automatically replicated to multiple nodes for fault-tolerance. Replication across multiple data centers is supported. Failed nodes can be replaced with no downtime.
+
+\subsection{Tunable consistency}
+
+Writes and reads offer a tunable level of consistency, all the way from <<writes never fail>> to <<block for all replicas to be readable>>, with the quorum level in the middle.
+
+\subsection{MapReduce support}
+Cassandra has Hadoop integration, with MapReduce support. There is support also for Apache Pig and Apache Hive.
+
+\subsection{Query language}
+
+CQL (Cassandra Query Language) was introduced, an SQL-like alternative to the traditional RPC interface. Language drivers are available for Java (JDBC) and Python (DBAPI2).
+
+\section{Strengths}
+
+\section{Weaknesses}
+
+\section{Tips}
+
+\section{Use cases}
+
+\begin{itemize}
+  \item Storing Log Data
+  \item Analytics
+  \item Social networks
+  \item Mailing systems
+\end{itemize}
