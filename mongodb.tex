@@ -40,6 +40,16 @@ Because Mongo is focused on large datasets, it works best in large clusters, whi
 
 \section{Tips}
 
+\subsection{Compact databases with repair}
+
+Command <<repair>> (use for repair data in database) can be used to compact databases. <<repair>> basically does a <<mongodump>> and then a <<mongorestore>>, making a clean copy of your data and, in the process, removing any empty <<holes>> in your data files. (When you do a lot of deletes or updates that move things around, large parts of your collection could be sitting around empty.) repair re-inserts everything in a compact form.\cite{mongodb_tips}
+
+\subsection{Always use replication, journaling, or both}
+
+If you’re running a single server, use the <<--journal>> option.
+
+Given the performance penalties involved in using journaling, you might want to mix journaled an unjournaled servers if you have multiple machines. Backup slaves could be journaled, whereas primaries and secondaries (especially those balancing read load) could be unjournaled.\cite{mongodb_tips}
+
 \section{Use cases}
 
 \begin{itemize}
