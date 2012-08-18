@@ -21,10 +21,35 @@ FlockDB is an open source distributed, fault-tolerant graph database for managin
 
 \section{Main features}
 
+\subsection{MySQL as the storage engine}
+
+FlockDB use MySQL as the storage engine. This allow understand its behavior~-- in normal use as well as under extreme load and unusual failure conditions.
+
+\subsection{Write operations are idempotent and commutative}
+
+Write operations are idempotent and commutative, based on the time they enter the system. FlockDB can process operations out of order and end up with the same result, so it can paper over temporary network and hardware failures, or even replay lost data from minutes or hours ago. This was especially helpful during the initial roll-out.
+
+Commutative writes also simplify the process of bringing up new partitions. A new partition can receive write traffic immediately, and receive a dump of data from the old partitions slowly in the background. Once the dump is over, the partition is immediately <<live>> and ready to receive reads.
+
+\subsection{Horizontal partition}
+
+FlockDB allow for horizontal partitioning. It stores graphs as sets of edges between nodes identified by 64-bit integers. For a social graph, these node IDs will be user IDs. Each edge is also marked with a 64-bit position, used for sorting. Data is partitioned by node, so these queries can each be answered by a single partition, using an indexed range query. Similarly, paging through long result sets is done by using the position field as a cursor, rather than using LIMIT/OFFSET, so any page of results for a query is indexed and is equally fast.
+
 \section{Strengths}
 
 \section{Weaknesses}
 
 \section{Tips}
 
+\subsection{Use MySQL cache}
+
+For good performance better use enough MySQL partitions, which have enough memory to keep all data in cache. If one MySQL partition cannot hold all the data in cache then better to increase the number of MySQL partitions.
+
 \section{Use cases}
+
+\begin{itemize}
+  \item Social relations
+  \item Public transport links
+  \item Road maps
+  \item Network topologies
+\end{itemize}
