@@ -1,30 +1,43 @@
 \ProvidesPackage{my_little_nosql}
+\RequirePackage{cmap}
 \RequirePackage{graphicx}
 \RequirePackage{tabularx}
 \RequirePackage{indentfirst}
-\RequirePackage[utf8x]{inputenc}
-\RequirePackage[USenglish]{babel}
-\RequirePackage{listings}
+\RequirePackage{mathtext}
 \RequirePackage[T1]{fontenc}
+\RequirePackage[utf8]{inputenc}
+\RequirePackage[english]{babel}
+\RequirePackage{listings}
 \RequirePackage[scaled]{beramono}
 \RequirePackage{tgadventor}
+\RequirePackage{times}
 \RequirePackage[usenames,dvipsnames]{color}
 \RequirePackage[colorlinks=true]{hyperref}
+\RequirePackage{amssymb,amsmath,amsfonts}
 \RequirePackage{perpage} %the perpage package
 \RequirePackage{wrapfig}
+\RequirePackage{pdfpages} % cover image
+\RequirePackage{lmodern}
+
+\graphicspath{{images/}{logos/}}
+
+\sloppy
 
 \definecolor{lineno}{rgb}{0.5,0.5,0.5}
 \definecolor{code}{rgb}{0,0.1,0.6}
 \definecolor{keyword}{rgb}{0.5,0.1,0.1}
 \definecolor{titlebox}{rgb}{0.85,0.85,0.85}
 \definecolor{download}{rgb}{0.8,0.1,0.5}
-\definecolor{title}{rgb}{0.4,0.4,0.4}
+\definecolor{code_title}{rgb}{0.8,0.1,0.4}
+\definecolor{title}{rgb}{0.2,0.2,0.2}
 
 \lstset{
-    language=Ruby,
+    language=SQL,
     basicstyle=\ttfamily\small\color{code},
     showspaces=false,
     showstringspaces=false,
+    breaklines=true,                 % Автоматический перенос строк
+    breakatwhitespace=true,
     numbers=left,
     firstnumber=1,
     stepnumber=5,
@@ -33,7 +46,11 @@
     keywordstyle=\color{keyword}\bfseries,
     stringstyle=\itshape,
     morekeywords={dosync,if},
-    deletekeywords={alter}
+    deletekeywords={alter},
+    title=Листинг,
+    keepspaces=true,
+    extendedchars=\true,
+    inputencoding=utf8
 }
 
 \lstdefinelanguage{JavaScript}{
@@ -69,11 +86,31 @@
 \def\lst@maketitle#1{
    \vskip\abovecaptionskip
    \colorbox{titlebox}{
-       \scriptsize
-       \color{download}\ttfamily\href{http://mylittlenosql.org/examples/#1}{Download}
+       %\scriptsize
+       \small
+       \color{download}\ttfamily\href{http://nosql.leopard.in.ua/codes/#1}{Скачать}
        \color{title}\sffamily\bfseries#1}
    \vskip\belowcaptionskip}
+\def\lst@makecaption#1#2{
+  \vskip\abovecaptionskip
+  \colorbox{titlebox}{
+      %\scriptsize
+      \small
+      \color{code_title}\ttfamily#1
+      \color{title}\sffamily\bfseries#2}
+  \vskip\belowcaptionskip}
 \makeatother
 
+\let\olditemize=\itemize
+\def\itemize{
+  \olditemize
+  \setlength{\itemsep}{-1ex}
+}
+
+\let\oldenumerate=\enumerate
+\def\enumerate{
+  \oldenumerate
+  \setlength{\itemsep}{-1ex}
+}
 
 \MakePerPage{footnote} %the perpage package command

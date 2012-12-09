@@ -77,9 +77,8 @@ Note that when filtering by part of the complex key, you can only filter by in-o
 The syntax required to use startkey=\dots\&endkey=\dots~when you want to filter on only part of a complex key is as follows:
 Say we had a key like [user\_id, group\_id, timestamp], and we wanted to filter on only user\_id and group\_id where user\_id=123 and group\_id=456. Our url would look like:
 
-\begin{lstlisting}
-http://localhost:5984/database/_design/app/
-_view/messages?startkey=[123, 456]&endkey=[123,456,{}]
+\begin{lstlisting}[label=lst:couchdb1,caption=Filtering Views by Parts of a Complex Key]
+http://localhost:5984/database/_design/app/_view/messages?startkey=[123, 456]&endkey=[123,456,{}]
 \end{lstlisting}
 
 Notice the <<\{\}>> in the <<endkey>>. This is so that we get all values returned by the view between <<null>> and <<\{\}>>, which for just about every case should be everything.
@@ -92,7 +91,7 @@ Before CouchDB version 1.1.0 there was a small problem existing. View was automa
 
 Do not reinvent the wheel. You can find such code in the documentation as an example:
 
-\begin{lstlisting}[language=Javascript]
+\begin{lstlisting}[language=Javascript,label=lst:couchdb2,caption=Use the native reduce functions written on Erlang]
 function (key, values, rereduce) {
    return sum(values);
 }
