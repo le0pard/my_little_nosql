@@ -40,6 +40,48 @@ Because Mongo is focused on large datasets, it works best in large clusters, whi
 
 \section{Tips}
 
+\subsection{32-bit vs 64-bit}
+
+Most modern servers are either running 32-bit or 64-bit operating systems. Most modern hardware supports 64-bit operating systems, which are better because they permit more addressable memory space, i.e. more RAM.
+
+MongoDB ships with two versions~--- 32-bit and 64-bit. Due to the way MongoDB uses memory mapped files 32-bit builds can only store around 2G of data. For standard replicasets MongoDB only has a single process type~--- mongod. If you’re intending on storing more than 2G of data you should use a 64-bit build of MongoDB. For setups that are sharded, you can use 32-bit builds for the mongos.
+
+\subsection{Document size limits}
+
+Unlike a Relational Database Management System (RDBMS) which stores data in columns and rows, MongoDB stores data in documents. These documents are BSON, which is a binary format similar to JSON.
+
+Like most other databases, there are limits to what you can store in a document. In older versions of MongoDB, documents were limited to 4M each. All recent versions support documents up to 16M in size. This may sound like an annoyance, but 10gen's opinion on this is that if you are hitting this limit then either your schema design is wrong or you should be using GridFS, which allows arbitrarily sized documents.
+
+Generally, I would suggest avoiding storing large, irregularly updated objects in a database of any kind. Services such as Amazon S3 or Rackspace Cloudfiles are generally a much better option and don't load your infrastructure unnecessarily.
+
+\subsection{Write failure}
+
+MongoDB allows very fast writes and updates by default. The tradeoff is that you are not explicitly notified of failures. By default most drivers do asynchronous, <<unsafe>> writes~--- this means that the driver does not return an error directly, similar to INSERT DELAYED with MySQL. If you want to know if something succeeded, you have to manually check for errors using getLastError.
+
+For cases where you want an error thrown if something goes wrong, it's simple in most drivers to enable <<safe>> queries which are synchronous. This makes MongoDB act in a familiar way to those migrating from a more traditional database.
+
+If you need more performance than a 'fully safe' synchronous write, but still want some level of safety, you can ask MongoDB to wait until a journal commit has happened using getLastError with 'j'. The journal is flushed to disk every 100 milliseconds, rather than 60 seconds as with the main store.
+
+\subsection{Locking}
+
+When resources are shared between different parts of code sometimes locks are needed to ensure only one thing is happening at once.
+
+Older versions of MongoDB~--- pre 2.0~--- had a global write lock. Meaning only one write could happen at once throughout the entire server. This could result in the database getting bogged down with locking under certain loads. This was improved significantly in 2.0, and again in the current stable 2.2. MongoDB 2.2 solves this with database level locking and is a big step forward. The next step, which I expect will be another large improvement is Collection level locking, which is planned for the next stable version.
+Having said this, most applications I’ve seen were limited by the application itself (too few threads, badly designed) rather than MongoDB itself.
+
+\subsection{You cannot shard a collection over 256G}
+
+Going back to leaving things too late~--- MongoDB won’t allow you to shard a collection after it has grown bigger than 256G. This used to be a \href{https://jira.mongodb.org/browse/SERVER-2271}{lot lower}. This will eventually be removed completely. There is no solution other than recompiling or avoiding trying to shard collections larger than this.
+
+\subsection{Using an even number of Replica Set members}
+
+Replica Sets are an easy way to add redundancy and read performance to your MongoDB cluster. Data is replicated between all the nodes and one is elected as the primary. If the primary fails, the other nodes will vote between themselves and one will be elected the new primary.
+
+It can be tempting to run with two machines in a replica set; it's cheaper than three and is pretty standard way of doing things with RDBMSs.
+However due to the way voting works with MongoDB, you must use an odd number of replica set members. If you use an even number and one node fails the rest of the set will go read-only. This happens as the remaining machines will not have enough votes to get to a quorum.
+
+If you want to save some money, but still support failover and increased redundancy, you can use arbiters. Arbiters are a special type of replica set member~--- they do not store any user data (which means they can be on very small servers) but otherwise vote as normal.
+
 \subsection{Compact databases with repair}
 
 Command <<repair>> (use for repair data in database) can be used to compact databases. <<repair>> basically does a <<mongodump>> and then a <<mongorestore>>, making a clean copy of your data and, in the process, removing any empty <<holes>> in your data files. (When you do a lot of deletes or updates that move things around, large parts of your collection could be sitting around empty.) repair re-inserts everything in a compact form.\cite{mongodb_tips}
