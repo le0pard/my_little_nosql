@@ -54,23 +54,140 @@ CouchDB was designed with bi-direction replication (or synchronization) and off-
 
 CouchDB guarantees eventual consistency to be able to provide both availability and partition tolerance.
 
-\section{Database operations}
+\section{Operations}
+
+\subsection{Database operations}
 
 The commands in this section deal with CouchDB databases as a whole, i.e. creating, querying information, and deleting them.
 
-\begin{tabularx}{0.95\textwidth}{ X X X }
-Operation & Request path & Info \\
-\hline
-list databases & GET /\_all\_dbs ["rep1","db","names"] & \\
-\hline
-create database & PUT /db & \color{Bittersweet}{lowercase only} \\
-\hline
-destroy database & DELETE /db & \\
-\hline
-database information & 
-GET /db & \\
-\hline
-\end{tabularx}
+\begin{multicols}{2}
+  
+\subsubsection{List databases}
+\begin{lstlisting}
+GET /_all_dbs 
+["_replicator",
+"_users",
+"couch_yammer",
+"db"]
+\end{lstlisting}
+
+\subsubsection{Create database}
+\begin{lstlisting}
+PUT /db
+\end{lstlisting}
+
+\subsubsection{Destroy database}
+\begin{lstlisting}
+DELETE /db
+\end{lstlisting}
+  
+\subsubsection{Database information}
+\begin{lstlisting}
+GET /db
+{
+  "db_name":"db",
+  "doc_count":188,
+  "doc_del_count":14,
+  "update_seq":10641,
+  "purge_seq":0,
+  "compact_running":false,
+  "disk_size":839787,
+  "data_size":838166,
+  "disk_format_version":6,
+  "committed_update_seq":10641
+}
+\end{lstlisting}
+  
+\subsubsection{Change notifications}
+\begin{lstlisting}
+GET /db/_changes
+&style=main_only
+&style=all_docs
+\end{lstlisting}
+  
+\subsubsection{Changes since seq}
+\begin{lstlisting}
+GET /db/_changes?since=87 
+&timeout=milliseconds
+\end{lstlisting}
+  
+\subsubsection{Changes: long polling}
+\begin{lstlisting}
+GET /db/_changes?feed=longpoll
+\end{lstlisting}
+
+\subsubsection{Changes: continuous feed}
+\begin{lstlisting}
+GET /db/_changes?feed=continuous 
+&heartbeat=milliseconds
+\end{lstlisting}
+
+\end{multicols}
+
+\subsection{Document operations}
+
+\begin{multicols}{2}
+  
+\subsubsection{List all documents}
+\begin{lstlisting}
+GET /db/_all_docs
+ &descending=true
+ &limit=3
+ &include_docs=true
+\end{lstlisting}
+
+\subsubsection{Get single document}
+\begin{lstlisting}
+GET /db/doc
+ &revs=true
+ &rev=nnnnn
+\end{lstlisting}
+
+\subsubsection{Fetch documents by keys}
+\begin{lstlisting}
+POST /db/_all_docs \
+-d '{"keys":["jane","jkp"]}'
+\end{lstlisting}
+
+\subsubsection{Create document with id}
+\begin{lstlisting}
+PUT /db/88 -d '{"name":"Jane"}'
+{"ok":true,
+"id":"88",
+"rev":"1-c289"}
+\end{lstlisting}
+
+\subsubsection{Create document}
+\begin{lstlisting}
+POST /db -d '{"name":"Jesse"}' 
+{"ok":true,
+"id":"bd4b4...",
+"rev":"1-a3ea"}
+\end{lstlisting}
+
+\subsubsection{Copy document}
+\begin{lstlisting}
+COPY /db/88 -H "Destination: jane" 
+{"id":"jane",
+"rev":"1-c2890"}
+\end{lstlisting}
+
+\subsubsection{Update document}
+\begin{lstlisting}
+PUT /db/doc
+PUT /db/88 -d '{"name":"JanE", "_rev":"1-c289"}'
+{"ok":true,
+"id":"88",
+"rev":"2-a524"}
+\end{lstlisting}
+
+\subsubsection{Delete document}
+\begin{lstlisting}
+DELETE /db/doc
+DELETE /db/88?rev=2-a524
+\end{lstlisting}
+
+\end{multicols}
 
 \section{Strengths}
 
