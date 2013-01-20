@@ -60,7 +60,7 @@ MongoDB allows very fast writes and updates by default. The tradeoff is that you
 
 For cases where you want an error thrown if something goes wrong, it's simple in most drivers to enable <<safe>> queries which are synchronous. This makes MongoDB act in a familiar way to those migrating from a more traditional database.
 
-If you need more performance than a 'fully safe' synchronous write, but still want some level of safety, you can ask MongoDB to wait until a journal commit has happened using getLastError with 'j'. The journal is flushed to disk every 100 milliseconds, rather than 60 seconds as with the main store.
+If you need more performance than a <<fully safe>> synchronous write, but still want some level of safety, you can ask MongoDB to wait until a journal commit has happened using getLastError with <<j>>. The journal is flushed to disk every 100 milliseconds, rather than 60 seconds as with the main store.
 
 \subsection{Locking}
 
@@ -71,7 +71,7 @@ Having said this, most applications I’ve seen were limited by the application 
 
 \subsection{You cannot shard a collection over 256G}
 
-Going back to leaving things too late~--- MongoDB won’t allow you to shard a collection after it has grown bigger than 256G. This used to be a \href{https://jira.mongodb.org/browse/SERVER-2271}{lot lower}. This will eventually be removed completely. There is no solution other than recompiling or avoiding trying to shard collections larger than this.
+Going back to leaving things too late~--- MongoDB won't allow you to shard a collection after it has grown bigger than 256G. This used to be a \href{https://jira.mongodb.org/browse/SERVER-2271}{lot lower}. This will eventually be removed completely. There is no solution other than recompiling or avoiding trying to shard collections larger than this.
 
 \subsection{Using an even number of Replica Set members}
 
