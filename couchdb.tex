@@ -7,7 +7,7 @@
   \end{center}
   \vspace{-70pt}
 \end{wrapfigure}
-Apache CouchDB, commonly referred to as CouchDB, is an open source database that focuses on ease of use and on being <<a database that completely embraces the web>>. It is a NoSQL database that uses JSON to store data, JavaScript as its query language using MapReduce and HTTP for an API.
+Apache CouchDB, commonly referred to as CouchDB, is an open source database that focuses on ease of use and on being <<a database that completely embraces the web>>. It is a NoSQL database that uses JSON to store data, JavaScript as its query language using MapReduce and HTTP for an API. CouchDB documents all have an \_id field which is unique, and a \_rev field containing a documents last revision. The \_id can be any string and is often a UUID, whereas the revision number changes on each update to the document.
 
 \section{Short specification}
 
@@ -53,6 +53,24 @@ CouchDB was designed with bi-direction replication (or synchronization) and off-
 \subsection{Eventual Consistency}
 
 CouchDB guarantees eventual consistency to be able to provide both availability and partition tolerance.
+
+\section{Database operations}
+
+The commands in this section deal with CouchDB databases as a whole, i.e. creating, querying information, and deleting them.
+
+\begin{tabularx}{0.95\textwidth}{ X X X }
+Operation & Request path & Info \\
+\hline
+list databases & GET /\_all\_dbs ["rep1","db","names"] & \\
+\hline
+create database & PUT /db & \color{Bittersweet}{lowercase only} \\
+\hline
+destroy database & DELETE /db & \\
+\hline
+database information & 
+GET /db & \\
+\hline
+\end{tabularx}
 
 \section{Strengths}
 
