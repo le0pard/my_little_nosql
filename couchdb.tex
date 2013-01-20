@@ -187,6 +187,13 @@ DELETE /db/doc
 DELETE /db/88?rev=2-a524
 \end{lstlisting}
 
+\subsubsection{Add attachment}
+\begin{lstlisting}
+PUT /db/doc/image.jpg?rev=1-c289 \
+-H 'Content-Type: image/jpeg' \
+--data-binary @filename.jpg
+\end{lstlisting}
+
 \end{multicols}
 
 \section{Strengths}
