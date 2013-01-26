@@ -59,16 +59,11 @@ CouchDB guarantees eventual consistency to be able to provide both availability 
 \subsection{Database operations}
 
 The commands in this section deal with CouchDB databases as a whole, i.e. creating, querying information, and deleting them.
-
-\begin{multicols}{2}
   
 \subsubsection{List databases}
 \begin{lstlisting}
 GET /_all_dbs 
-["_replicator",
-"_users",
-"couch_yammer",
-"db"]
+["_replicator", "_users", "couch_yammer", "db"]
 \end{lstlisting}
 
 \subsubsection{Create database}
@@ -101,14 +96,12 @@ GET /db
 \subsubsection{Change notifications}
 \begin{lstlisting}
 GET /db/_changes
-&style=main_only
-&style=all_docs
+&style=main_only&style=all_docs
 \end{lstlisting}
   
 \subsubsection{Changes since seq}
 \begin{lstlisting}
-GET /db/_changes?since=87 
-&timeout=milliseconds
+GET /db/_changes?since=87&timeout=milliseconds
 \end{lstlisting}
   
 \subsubsection{Changes: long polling}
@@ -118,29 +111,21 @@ GET /db/_changes?feed=longpoll
 
 \subsubsection{Changes: continuous feed}
 \begin{lstlisting}
-GET /db/_changes?feed=continuous 
-&heartbeat=milliseconds
+GET /db/_changes?feed=continuous&heartbeat=milliseconds
 \end{lstlisting}
 
-\end{multicols}
-
 \subsection{Document operations}
-
-\begin{multicols}{2}
   
 \subsubsection{List all documents}
 \begin{lstlisting}
 GET /db/_all_docs
- &descending=true
- &limit=3
- &include_docs=true
+&descending=true&limit=3&include_docs=true
 \end{lstlisting}
 
 \subsubsection{Get single document}
 \begin{lstlisting}
 GET /db/doc
- &revs=true
- &rev=nnnnn
+&revs=true&rev=nnnnn
 \end{lstlisting}
 
 \subsubsection{Fetch documents by keys}
@@ -194,7 +179,15 @@ PUT /db/doc/image.jpg?rev=1-c289 \
 --data-binary @filename.jpg
 \end{lstlisting}
 
-\end{multicols}
+\subsubsection{Views}
+
+Views are the method of aggregating and reporting on the documents in a CouchDB database, and they are built on-demand. Views are built dynamically and don’t affect the underlying documents; you can have as many different view representations of the same data as you like. View definitions are strictly virtual and only display the documents from the current database instance, making them separate from the data they display and compatible with replication. CouchDB views are defined in design documents and can replicate like regular documents.
+
+\subsubsection{Map/Reduce}
+
+A map function takes a single document as input, and returns an array of key/value pairs as output, whereby an empty array is possible. For a given input, the map function must produce the same output, so the result can’t vary according to the time of day, or any other factor. Map functions in CouchDB use the emit() function to send each of the key-value pairs that make up the array back to the server.
+
+A reduce function takes an array as input, and it returns a single value (which may be a complex type such as an array or hash) as output. Depending on the amount of data CouchDB has to process, the reduce operation could be broken up into smaller chunks by the server. When this happens, the reduce function is invoked with rereduce set to false. The reduce function’s results are then amassed by CouchDB, and the reduce function is finally called with rereduce set to true, with an array of values in values. So, if rereduce is false, the keys and values arguments are a list of keys/values for each row emitted by map respectively. If, on the other hand, rereduce is true, keys will be null, and the values argu- ment contains an array of results produced by the previous invocation(s) of the reduce function. The reduce function must produce the same result if the input array is randomly shuffled.
 
 \section{Strengths}
 
